@@ -15,7 +15,7 @@
     local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Lib/main/source.lua"))()
 
     -- Create a window
-    
+
     local args = {
         [1] = false
     }
@@ -46,10 +46,10 @@
 
     window:Toggle("Auto Convert", false, function(bool)
 
-        if convertEnabled = false then
-                    convertEnabled = true
+        if AutoConvertV = false then
+                    AutoConvertV = true
                     button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
-                    convertEnabled = true
+                    AutoConvertV = true
                     print("Auto-Convert Enabled")
                     while convertEnabled == true do
                         convert.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
@@ -58,7 +58,7 @@
                     end
                 else
                     print("Auto-Convert Disabled")
-                    convertEnabled = false
+                    AutoConvertV = false
                     button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
                 end
 
