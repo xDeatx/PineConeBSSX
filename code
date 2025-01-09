@@ -34,9 +34,9 @@
                         player.Character:FindFirstChildOfClass("Tool"):WaitForChild("ToolRemote"):FireServer(unpack(args))
                     end
 
-                elseif AutoDigV == true then
+                else
                     print("Auto Dig Disabled")
-                    AutoDigV = false
+                    AutoDigV = bool
                 end
         end)
 
