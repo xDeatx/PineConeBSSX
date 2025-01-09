@@ -77,9 +77,9 @@
                         deb = false
 
                     end
-            else
+        else
             print("Multi Dig Disabled")
             MultiDigV = false
-        end
+         end
     end)
 end)
