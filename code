@@ -26,7 +26,7 @@
     window:Toggle("Auto Dig", false, function(bool)
                 print(bool) -- bool is true or false depending on the state of the toggle
                 if AutoDigV == false then
-                    AutoDigV = true
+                    AutoDigV = bool
 
                     print("Auto Dig Enabled.")
                     
@@ -35,7 +35,7 @@
                     end
                 else
                     print("Auto Dig Disabled")
-                    AutoDigV = false
+                    AutoDigV = bool
                 end
         end)
 
