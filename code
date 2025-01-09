@@ -11,7 +11,7 @@
 
     -- Initalize Turtle Library
     
-    print("Loaded Turtle LIB")
+    
 
     local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Lib/main/source.lua"))()
 
@@ -23,6 +23,8 @@
 
 
     local window = library:Window("Pinecone v0.2")
+
+    print("Loaded Turtle LIB")
 
     window:Toggle("Auto Dig", false, function(bool)
                 if AutoDigV == false then
