@@ -1,0 +1,235 @@
+local UserInputService = game:GetService("UserInputService")
+local convert = game.Workspace:FindFirstChild("Convert")
+local player = game:GetService("Players").LocalPlayer
+local character = player.Character
+local AutoConvertV = false
+local AutoDigV = false
+local MultiDigV = false
+local AutoFarmV = false
+local autoFarming = false
+local digSpeed = 1
+local multiDigSpeed = 1
+local field = "Ant Field"
+local sprinkler = false
+local tokenFolder = game:GetService("Workspace").Debris.Tokens:GetChildren()
+local noHive = true
+
+convert.CanCollide = false
+convert.Transparency = 1
+
+for _, v in ipairs(workspace.Hives:GetChildren()) do
+    if v:FindFirstChild("Claimed").Value == false and noHive == true then
+        local claimHandler = v.Platform.Top.Proxy.Handler
+        local proxy = claimHandler.Parent.Parent:WaitForChild("Proxy")
+
+        game:GetService("ReplicatedStorage").Remotes.ClaimHive:FireServer(proxy.Parent.Parent.Parent)
+        noHive = false
+    else
+        noHive = false
+    end
+end
+
+-- Initalize Turtle Library
+
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Lib/main/source.lua"))()
+library:Keybind("P")
+-- Create a window
+
+local args = {
+    [1] = false
+}
+
+local args2 = {
+    [1] = "Sprinkler",
+    [2] = workspace:WaitForChild("Fields"):WaitForChild(field):WaitForChild("FieldBox")
+}
+
+
+local window = library:Window("Pinecone v0.3")
+print("Loaded Turtle LIB")
+
+window:Toggle(
+    "Auto Farm",
+    false,
+    function(bool)
+        if AutoFarmV == false and field then
+            AutoFarmV = bool
+            autoFarming = true
+            print(field)
+        while AutoFarmV == true do
+            wait(0.5)
+            for _, v in pairs(game:GetService("Workspace").Fields:GetChildren()) do
+                if v.Name == field then
+                    character.HumanoidRootPart.CFrame = v:FindFirstChildOfClass("Part").CFrame
+                    wait(1)
+                    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("UseItem"):FireServer(unpack(args2))
+                    wait(1)
+
+                    while AutoFarmV == true do
+                        wait(0.5)
+                        for _, v in pairs(game:GetService("Workspace").Debris.Tokens:GetChildren()) do
+                            character.HumanoidRootPart.CFrame = v.CFrame
+                        end
+                    end
+                end
+            end
+       
+        end
+    else
+        AutoFarmV = bool
+    end
+end
+)
+
+
+
+window:Toggle(
+    "Auto Sprinkler",
+    false,
+    function(bool)
+    while wait(0.1) do
+        if autoFarming == true and sprinkler == false then
+            sprinkler = true
+            print("Placed sprinkler")
+        end
+    end 
+end
+)
+
+local dropdown2 =
+    window:Dropdown(
+    "Choose Field",
+    {"Ant Field", "Area Field", "Bamboo Field"},
+    function(fieldName)
+        print(fieldName)
+        field = fieldName
+    end
+)
+
+dropdown2:Button("Blueberry Field")
+dropdown2:Button("Cactus Field")
+dropdown2:Button("Cave Field")
+dropdown2:Button("Clover Field")
+dropdown2:Button("Coconut Field")
+dropdown2:Button("Gummy Field")
+dropdown2:Button("Jungle Field")
+dropdown2:Button("Leaf Field")
+dropdown2:Button("Pepper Field")
+dropdown2:Button("PineTree Field")
+dropdown2:Button("Pumpkin Field")
+dropdown2:Button("Rose Field")
+dropdown2:Button("Strawberry Field")
+dropdown2:Button("Stump Field")
+dropdown2:Button("White Field")
+
+window:Toggle(
+    "Auto Dig",
+    false,
+    function(bool)
+        if AutoDigV == false and player.Character:FindFirstChildOfClass("Tool") then
+            AutoDigV = true
+
+            while AutoDigV == true  do
+                if MultiDigV == true then
+                    wait(multiDigSpeed)
+                    for i = 30, 0, -1 do
+                        player.Character:FindFirstChildOfClass("Tool").ToolRemote:FireServer(unpack(args))
+                    end
+                else
+                    wait(digSpeed)
+                    player.Character:FindFirstChildOfClass("Tool").ToolRemote:FireServer(unpack(args))
+        end
+            
+            
+            end
+        elseif player.Backpack:FindFirstChildOfClass("Tool") then
+                    local theTool = player.Backpack:FindFirstChildOfClass("Tool") 
+                    theTool.Parent = character
+                    wait(0.5)
+        else
+            print("Auto Dig Disabled")
+            AutoDigV = bool
+        end
+    end
+)
+
+window:Box("AD Speed", function(text, focuslost)
+    while focuslost do
+        wait(0.5)
+        digSpeed = text
+
+    end
+ end)
+
+
+
+window:Toggle(
+    "Multi Dig",
+    false,
+    function(bool)
+        if MultiDigV == false and character:FindFirstChildOfClass("Tool") then
+            MultiDigV = bool
+            UserInputService.InputBegan:Connect(
+                function(key)
+                    if key.UserInputType == Enum.UserInputType.MouseButton1 and MultiDigV == true then
+                        for i = 25, 0, -1 do
+                            player.Character:FindFirstChildOfClass("Tool").ToolRemote:FireServer(unpack(args))
+                        end
+                    end
+                end
+            )
+        else
+            print("Multi Dig Disabled")
+            MultiDigV = false
+        end
+    end
+)
+
+window:Box("MD Speed", function(text, focuslost)
+    while focuslost do
+        wait(0.5)
+        digSpeed = text
+
+    end
+ end)
+
+ window:Toggle(
+    "Auto Convert",
+    false,
+    function(bool)
+        if AutoConvertV == false then
+            AutoConvertV = bool
+            print("Auto-Convert Enabled")
+            while AutoConvertV == true do
+                convert.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
+                wait(0.1)
+                convert.Position = Vector3.new(50, 1000, 50)
+            end
+        else
+            print("Auto-Convert Disabled")
+            AutoConvertV = false
+        end
+    end
+)
+
+
+window:Box("Walkspeed", function(text, focuslost)
+    while focuslost do
+        wait(0.5)
+        character.Humanoid.WalkSpeed = text
+
+    end
+ end)
+
+
+
+
+window:Label("Menu Keybind: P", Color3.fromRGB(255, 255, 255))
+
+
+while true do
+    wait(0.4)
+    for _, v in pairs(game:GetService("Workspace").Debris.Tokens:GetChildren()) do
+        v:Destroy()
+    end
+end
