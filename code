@@ -22,7 +22,6 @@ local window = library:Window("Pinecone v0.2")
 
 window:Toggle("Auto Dig", false, function(bool)
             print(bool) -- bool is true or false depending on the state of the toggle
-autodi
 			if AutoDigV == false then
 				AutoDigV = true
 				button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
