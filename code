@@ -1,11 +1,9 @@
-    local deb = false
     local UserInputService = game:GetService("UserInputService")
     local convert = game.Workspace:FindFirstChild("Convert")
     local player = game:GetService("Players").LocalPlayer
     local AutoConvertV = false
     local AutoDigV = false
     local MultiDigV = false
-
     convert.CanCollide = false
     convert.Transparency = 1
 
@@ -14,7 +12,7 @@
     
 
     local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Lib/main/source.lua"))()
-
+    library:Keybind("P")
     -- Create a window
 
     local args = {
@@ -23,7 +21,6 @@
 
 
     local window = library:Window("Pinecone v0.2")
-
     print("Loaded Turtle LIB")
 
     window:Toggle("Auto Dig", false, function(bool)
@@ -32,7 +29,7 @@
 
                     
                     while AutoDigV == true do
-                        task.wait(0.2)
+                        task.wait(value)
                         player.Character:FindFirstChildOfClass("Tool"):WaitForChild("ToolRemote"):FireServer(unpack(args))
                     end
 
@@ -42,10 +39,13 @@
                 end
         end)
 
+        window:Slider("Auto Dig Speed", 0.05, 2, 1, function(value)
+            
+        end)
+
         
 
-
-    window:Toggle("Auto Convert", false, function(bool)
+        window:Toggle("Auto Convert", false, function(bool)
 
         if AutoConvertV == false then
                     AutoConvertV = bool
@@ -69,16 +69,12 @@
         if MultiDigV == false then
             MultiDigV = bool
             UserInputService.InputBegan:Connect(function(key)
-                    if key.UserInputType == Enum.UserInputType.MouseButton1 and deb == false and MultiDigV == true then
+                    if key.UserInputType == Enum.UserInputType.MouseButton1 and MultiDigV == true then
                         print("Multi Digged.")
 
                         for i = 25, 0, -1 do
                             player.Character:FindFirstChildOfClass("Tool").ToolRemote:FireServer(unpack(args))
                         end
-
-                        deb = true
-                        wait(0.5)
-                        deb = false
 
                     end
             end)
@@ -87,3 +83,17 @@
             MultiDigV = false
          end
 end)
+
+
+local dropdown = window:Dropdown("Mob List", {"Mini Mantis", "Mantis", "Ladybug", "Ladybug Boss" "Mini Scorpion", "Scorpion", "Stump Snail", "Ant", "Clover Bug", "Mutated Mob"}, function(name)
+    print(name)
+end)
+
+dropdown:Toggle("Auto Mob")
+
+
+
+
+window:Label("Menu Keybind: P", Color3.fromRGB(255,255,255))
+
+
