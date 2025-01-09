@@ -24,18 +24,18 @@
     local window = library:Window("Pinecone v0.2")
 
     window:Toggle("Auto Dig", false, function(bool)
-                print(bool) -- bool is true or false depending on the state of the toggle
                 if AutoDigV == false then
                     AutoDigV = bool
 
                     print("Auto Dig Enabled.")
                     
                     while task.wait(0.2) do
-                        player.Character:FindFirstChildOfClass("Tool").ToolRemote:FireServer(unpack(args))
+                        player.Character:FindFirstChildOfClass("Tool"):WaitForChild(ToolRemote):FireServer(unpack(args))
                     end
+
                 else
                     print("Auto Dig Disabled")
-                    AutoDigV = bool
+                    AutoDigV = false
                 end
         end)
 
@@ -85,5 +85,6 @@
         else
             MultiDigV = false
         end
+    end
 
     end)
