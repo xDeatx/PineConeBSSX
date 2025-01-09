@@ -11,6 +11,8 @@
 
     -- Initalize Turtle Library
     
+    print("Loaded Turtle LIB")
+
     local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Lib/main/source.lua"))()
 
     -- Create a window
