@@ -15,6 +15,7 @@
 
     if isLoaded then
         isLoaded:Destroy()
+        print("Destroyed previous Turtle Lib")
     end
 
 
