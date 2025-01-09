@@ -27,7 +27,6 @@
                 print(bool) -- bool is true or false depending on the state of the toggle
                 if AutoDigV == false then
                     AutoDigV = true
-                    button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
 
                     print("Auto Dig Enabled.")
                     
@@ -37,7 +36,6 @@
                 else
                     print("Auto Dig Disabled")
                     AutoDigV = false
-                    button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
                 end
         end)
 
@@ -47,11 +45,9 @@
     window:Toggle("Auto Convert", false, function(bool)
 
         if AutoConvertV == false then
-                    AutoConvertV = true
-                    button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
-                    AutoConvertV = true
+                    AutoConvertV = bool
                     print("Auto-Convert Enabled")
-                    while convertEnabled == true do
+                    while AutoConvertV == true do
                         convert.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
                         wait(0.1)
                         convert.Position = Vector3.new(50, 1000, 50)
@@ -59,7 +55,6 @@
                 else
                     print("Auto-Convert Disabled")
                     AutoConvertV = false
-                    button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
                 end
 
     end)
@@ -69,7 +64,7 @@
     window:Toggle("Multi Dig", false, function(bool)
 
         if MultiDigV == false then
-            MultiDigV = true
+            MultiDigV = bool
             UserInputService.InputBegan:Connect(
                 function(key)
                     if key.UserInputType == Enum.UserInputType.MouseButton1 and deb == false then
@@ -87,11 +82,8 @@
                     end
                 end
             )
-
-            button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
         else
             MultiDigV = false
-            button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
         end
 
     end)
