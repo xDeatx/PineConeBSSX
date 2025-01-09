@@ -67,7 +67,7 @@
         if MultiDigV == false then
             MultiDigV = bool
             UserInputService.InputBegan:Connect(function(key)
-                    if key.UserInputType == Enum.UserInputType.MouseButton1 and deb == false then
+                    if key.UserInputType == Enum.UserInputType.MouseButton1 and deb == false and MultiDigV == true then
                         print("Multi Digged.")
 
                         for i = 25, 0, -1 do
