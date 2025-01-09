@@ -11,14 +11,6 @@
 
     -- Initalize Turtle Library
     
-    local isLoaded = game:GetService("CoreGui"):WaitForChild("TurtleLib")
-
-    if isLoaded then
-        isLoaded:Destroy()
-        print("Destroyed previous Turtle Lib")
-    end
-
-
     print("Loaded Turtle LIB")
 
     local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Lib/main/source.lua"))()
