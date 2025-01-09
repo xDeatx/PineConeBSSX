@@ -34,11 +34,11 @@
 
     window:Toggle("Auto Dig", false, function(bool)
                 if AutoDigV == false then
-                    AutoDigV = bool
+                    AutoDigV = true
 
-                    print("Auto Dig Enabled.")
                     
-                    while task.wait(0.2) do
+                    while AutoDigV == true do
+                        task.wait(0.2)
                         player.Character:FindFirstChildOfClass("Tool"):WaitForChild("ToolRemote"):FireServer(unpack(args))
                     end
 
