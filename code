@@ -29,7 +29,7 @@
 
                     
                     while AutoDigV == true do
-                        task.wait(value)
+                        task.wait(0.1)
                         player.Character:FindFirstChildOfClass("Tool"):WaitForChild("ToolRemote"):FireServer(unpack(args))
                     end
 
@@ -37,10 +37,6 @@
                     print("Auto Dig Disabled")
                     AutoDigV = bool
                 end
-        end)
-
-        window:Slider("Auto Dig Speed", 0.05, 2, 1, function(value)
-            
         end)
 
         
