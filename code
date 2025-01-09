@@ -20,7 +20,7 @@
     }
 
 
-    local window = library:Window("Pinecone v0.2")
+    local window = library:Window("Pinecone v0.3")
     print("Loaded Turtle LIB")
 
     window:Toggle("Auto Dig", false, function(bool)
@@ -70,7 +70,6 @@
             MultiDigV = bool
             UserInputService.InputBegan:Connect(function(key)
                     if key.UserInputType == Enum.UserInputType.MouseButton1 and MultiDigV == true then
-                        print("Multi Digged.")
 
                         for i = 25, 0, -1 do
                             player.Character:FindFirstChildOfClass("Tool").ToolRemote:FireServer(unpack(args))
