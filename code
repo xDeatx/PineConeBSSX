@@ -46,7 +46,7 @@
 
     window:Toggle("Auto Convert", false, function(bool)
 
-        if AutoConvertV = false then
+        if AutoConvertV == false then
                     AutoConvertV = true
                     button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
                     AutoConvertV = true
