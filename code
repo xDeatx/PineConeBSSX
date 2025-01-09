@@ -29,7 +29,7 @@
                     print("Auto Dig Enabled.")
                     
                     while task.wait(0.2) do
-                        player.Character:FindFirstChildOfClass("Tool"):WaitForChild(ToolRemote):FireServer(unpack(args))
+                        player.Character:FindFirstChildOfClass("Tool"):WaitForChild("ToolRemote"):FireServer(unpack(args))
                     end
 
                 else
