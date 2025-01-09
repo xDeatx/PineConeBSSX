@@ -1,94 +1,97 @@
-local args = {
-	[1] = false
-}
-local deb = false
-local UserInputService = game:GetService("UserInputService")
-local convert = game.Workspace:FindFirstChild("Convert")
-local player = game:GetService("Players").LocalPlayer
-local AutoConvertV = false
-local AutoDigV = false
-local MultiDigV = false
+  
+    local deb = false
+    local UserInputService = game:GetService("UserInputService")
+    local convert = game.Workspace:FindFirstChild("Convert")
+    local player = game:GetService("Players").LocalPlayer
+    local AutoConvertV = false
+    local AutoDigV = false
+    local MultiDigV = false
 
-convert.CanCollide = false
-convert.Transparency = 1
+    convert.CanCollide = false
+    convert.Transparency = 1
 
--- Initalize Turtle Library
- 
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Lib/main/source.lua"))()
-
--- Create a window
-
-local window = library:Window("Pinecone v0.2")
-
-window:Toggle("Auto Dig", false, function(bool)
-            print(bool) -- bool is true or false depending on the state of the toggle
-			if AutoDigV == false then
-				AutoDigV = true
-				button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
-
-				print("Auto Dig Enabled.")
-                
-				while task.wait(0.2) do
-					player.Character:FindFirstChildOfClass("Tool").ToolRemote:FireServer(unpack(args))
-				end
-			else
-				print("Auto Dig Disabled")
-				AutoDigV = false
-				button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
-			end
-	end)
-
+    -- Initalize Turtle Library
     
+    local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Lib/main/source.lua"))()
+
+    -- Create a window
+    
+    local args = {
+        [1] = false
+    }
 
 
-window:Toggle("Auto Convert", false, function(bool)
+    local window = library:Window("Pinecone v0.2")
 
-    if convertEnabled = false then
-				convertEnabled = true
-				button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
-				convertEnabled = true
-				print("Auto-Convert Enabled")
-				while convertEnabled == true do
-					convert.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
-					wait(0.1)
-					convert.Position = Vector3.new(50, 1000, 50)
-				end
-			else
-				print("Auto-Convert Disabled")
-				convertEnabled = false
-				button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
-			end
+    window:Toggle("Auto Dig", false, function(bool)
+                print(bool) -- bool is true or false depending on the state of the toggle
+                if AutoDigV == false then
+                    AutoDigV = true
+                    button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
 
-end)
-
-
-
-window:Toggle("Multi Dig", false, function(bool)
-
-    if MultiDigV == false then
-        MultiDigV = true
-        UserInputService.InputBegan:Connect(
-            function(key)
-                if key.UserInputType == Enum.UserInputType.MouseButton1 and deb == false then
-                    print("Multi Digged.")
-
-                    for i = 25, 0, -1 do
+                    print("Auto Dig Enabled.")
+                    
+                    while task.wait(0.2) do
                         player.Character:FindFirstChildOfClass("Tool").ToolRemote:FireServer(unpack(args))
                     end
-
-                    deb = true
-                    wait(0.5)
-                    deb = false
                 else
-                    warn("Cooldown...")
+                    print("Auto Dig Disabled")
+                    AutoDigV = false
+                    button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
                 end
-            end
-        )
+        end)
 
-        button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
-    else
-        MultiDigV = false
-        button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
-    end
+        
 
-end)
+
+    window:Toggle("Auto Convert", false, function(bool)
+
+        if convertEnabled = false then
+                    convertEnabled = true
+                    button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
+                    convertEnabled = true
+                    print("Auto-Convert Enabled")
+                    while convertEnabled == true do
+                        convert.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
+                        wait(0.1)
+                        convert.Position = Vector3.new(50, 1000, 50)
+                    end
+                else
+                    print("Auto-Convert Disabled")
+                    convertEnabled = false
+                    button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
+                end
+
+    end)
+
+
+
+    window:Toggle("Multi Dig", false, function(bool)
+
+        if MultiDigV == false then
+            MultiDigV = true
+            UserInputService.InputBegan:Connect(
+                function(key)
+                    if key.UserInputType == Enum.UserInputType.MouseButton1 and deb == false then
+                        print("Multi Digged.")
+
+                        for i = 25, 0, -1 do
+                            player.Character:FindFirstChildOfClass("Tool").ToolRemote:FireServer(unpack(args))
+                        end
+
+                        deb = true
+                        wait(0.5)
+                        deb = false
+                    else
+                        warn("Cooldown...")
+                    end
+                end
+            )
+
+            button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
+        else
+            MultiDigV = false
+            button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
+        end
+
+    end)
