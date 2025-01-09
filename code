@@ -75,9 +75,8 @@
                         deb = true
                         wait(0.5)
                         deb = false
-                        
+
                     end
-            )
             else
             print("Multi Dig Disabled")
             MultiDigV = false
