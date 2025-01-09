@@ -1,225 +1,50 @@
--- Gui to Lua
--- Version: 3.2
-
--- Instances:
-
 local args = {
 	[1] = false
 }
-
 local deb = false
-
 local UserInputService = game:GetService("UserInputService")
 local convert = game.Workspace:FindFirstChild("Convert")
 local player = game:GetService("Players").LocalPlayer
-local convertEnabled = false
-local AutoDigEnabled = false
+local AutoConvertV = false
+local AutoDigV = false
+local MultiDigV = false
+
 convert.CanCollide = false
 convert.Transparency = 1
 
-local Pinecone = Instance.new("ScreenGui")
-local MainTab = Instance.new("Frame")
-local Panel = Instance.new("Frame")
-local UICorner = Instance.new("UICorner")
-local TextLabel = Instance.new("TextLabel")
-local UICorner_2 = Instance.new("UICorner")
-local AntiCorner = Instance.new("Frame")
-local AutoDig = Instance.new("TextButton")
-local UICorner_3 = Instance.new("UICorner")
-local AutoConvert = Instance.new("TextButton")
-local UICorner_4 = Instance.new("UICorner")
-local MultiDig = Instance.new("TextButton")
-local UICorner_5 = Instance.new("UICorner")
-local AutoDig_2 = Instance.new("TextLabel")
-local AutoConvert_2 = Instance.new("TextLabel")
-local MultiDig_2 = Instance.new("TextLabel")
+-- Initalize Turtle Library
+ 
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Turtle-Brand/Turtle-Lib/main/source.lua"))()
 
---Properties:
+-- Create a window
 
-Pinecone.Name = "Pinecone"
-Pinecone.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
-Pinecone.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+local window = library:Window("Pinecone v0.2")
 
-MainTab.Name = "MainTab"
-MainTab.Parent = Pinecone
-MainTab.AnchorPoint = Vector2.new(0.5, 0.5)
-MainTab.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
-MainTab.BorderColor3 = Color3.fromRGB(0, 0, 0)
-MainTab.BorderSizePixel = 0
-MainTab.Position = UDim2.new(0.5, 0, 0.43650794, 0)
-MainTab.Size = UDim2.new(0.300000042, 0, 0.373015881, 0)
-
-Panel.Name = "Panel"
-Panel.Parent = MainTab
-Panel.AnchorPoint = Vector2.new(0.5, 0.5)
-Panel.BackgroundColor3 = Color3.fromRGB(74, 74, 74)
-Panel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Panel.BorderSizePixel = 0
-Panel.Position = UDim2.new(0.50000006, 0, 0.039893616, 0)
-Panel.Size = UDim2.new(1.00000012, 0, 0.129787236, 0)
-Panel.ZIndex = 2
-
-UICorner.CornerRadius = UDim.new(0, 16)
-UICorner.Parent = Panel
-
-TextLabel.Parent = Panel
-TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel.BackgroundTransparency = 1.000
-TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
-TextLabel.BorderSizePixel = 0
-TextLabel.Position = UDim2.new(0.0500000007, 0, 0.100000001, 0)
-TextLabel.Size = UDim2.new(0.300000012, 0, 0.899999976, 0)
-TextLabel.ZIndex = 3
-TextLabel.Font = Enum.Font.SourceSans
-TextLabel.Text = "Pinecone"
-TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-TextLabel.TextScaled = true
-TextLabel.TextSize = 24.000
-TextLabel.TextWrapped = true
-TextLabel.TextXAlignment = Enum.TextXAlignment.Left
-
-UICorner_2.CornerRadius = UDim.new(0, 16)
-UICorner_2.Parent = MainTab
-
-AntiCorner.Name = "AntiCorner"
-AntiCorner.Parent = MainTab
-AntiCorner.AnchorPoint = Vector2.new(0.5, 0.5)
-AntiCorner.BackgroundColor3 = Color3.fromRGB(74, 74, 74)
-AntiCorner.BorderColor3 = Color3.fromRGB(0, 0, 0)
-AntiCorner.BorderSizePixel = 0
-AntiCorner.Position = UDim2.new(0.50000006, 0, 0.0916370824, 0)
-AntiCorner.Size = UDim2.new(1.00000012, 0, 0.0263001733, 0)
-
-AutoDig.Name = "AutoDig"
-AutoDig.Parent = MainTab
-AutoDig.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
-AutoDig.BorderColor3 = Color3.fromRGB(0, 0, 0)
-AutoDig.BorderSizePixel = 0
-AutoDig.Position = UDim2.new(0.0717644766, 0, 0.192164779, 0)
-AutoDig.Size = UDim2.new(0.085152179, 0, 0.146808505, 0)
-AutoDig.Font = Enum.Font.SourceSans
-AutoDig.Text = ""
-AutoDig.TextColor3 = Color3.fromRGB(0, 0, 0)
-AutoDig.TextSize = 14.000
-
-UICorner_3.Parent = AutoDig
-
-AutoConvert.Name = "AutoConvert"
-AutoConvert.Parent = MainTab
-AutoConvert.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
-AutoConvert.BorderColor3 = Color3.fromRGB(0, 0, 0)
-AutoConvert.BorderSizePixel = 0
-AutoConvert.Position = UDim2.new(0.0717644766, 0, 0.426207334, 0)
-AutoConvert.Size = UDim2.new(0.085152179, 0, 0.146808505, 0)
-AutoConvert.Font = Enum.Font.SourceSans
-AutoConvert.Text = ""
-AutoConvert.TextColor3 = Color3.fromRGB(0, 0, 0)
-AutoConvert.TextSize = 14.000
-
-UICorner_4.Parent = AutoConvert
-
-MultiDig.Name = "MultiDig"
-MultiDig.Parent = MainTab
-MultiDig.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
-MultiDig.BorderColor3 = Color3.fromRGB(0, 0, 0)
-MultiDig.BorderSizePixel = 0
-MultiDig.Position = UDim2.new(0.0717644766, 0, 0.664505184, 0)
-MultiDig.Size = UDim2.new(0.085152179, 0, 0.146808505, 0)
-MultiDig.Font = Enum.Font.SourceSans
-MultiDig.Text = ""
-MultiDig.TextColor3 = Color3.fromRGB(0, 0, 0)
-MultiDig.TextSize = 14.000
-
-UICorner_5.Parent = MultiDig
-
-AutoDig_2.Name = "AutoDig"
-AutoDig_2.Parent = MainTab
-AutoDig_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-AutoDig_2.BackgroundTransparency = 1.000
-AutoDig_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-AutoDig_2.BorderSizePixel = 0
-AutoDig_2.Position = UDim2.new(0.185597599, 0, 0.212765962, 0)
-AutoDig_2.Size = UDim2.new(0.300000012, 0, 0.100000001, 0)
-AutoDig_2.ZIndex = 4
-AutoDig_2.Font = Enum.Font.Cartoon
-AutoDig_2.Text = "Auto-Dig"
-AutoDig_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-AutoDig_2.TextSize = 24.000
-AutoDig_2.TextXAlignment = Enum.TextXAlignment.Left
-
-AutoConvert_2.Name = "AutoConvert"
-AutoConvert_2.Parent = MainTab
-AutoConvert_2.AnchorPoint = Vector2.new(0.5, 0.5)
-AutoConvert_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-AutoConvert_2.BackgroundTransparency = 1.000
-AutoConvert_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-AutoConvert_2.BorderSizePixel = 0
-AutoConvert_2.Position = UDim2.new(0.365008652, 0, 0.497872353, 0)
-AutoConvert_2.Size = UDim2.new(0.361865848, 0, 0.100000001, 0)
-AutoConvert_2.ZIndex = 4
-AutoConvert_2.Font = Enum.Font.Cartoon
-AutoConvert_2.Text = "Auto Convert"
-AutoConvert_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-AutoConvert_2.TextSize = 24.000
-AutoConvert_2.TextWrapped = true
-AutoConvert_2.TextXAlignment = Enum.TextXAlignment.Left
-
-MultiDig_2.Name = "MultiDig"
-MultiDig_2.Parent = MainTab
-MultiDig_2.AnchorPoint = Vector2.new(0.5, 0.5)
-MultiDig_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-MultiDig_2.BackgroundTransparency = 1.000
-MultiDig_2.BorderColor3 = Color3.fromRGB(0, 0, 0)
-MultiDig_2.BorderSizePixel = 0
-MultiDig_2.Position = UDim2.new(0.334075749, 0, 0.736170232, 0)
-MultiDig_2.Size = UDim2.new(0.300000012, 0, 0.100000001, 0)
-MultiDig_2.ZIndex = 4
-MultiDig_2.Font = Enum.Font.Cartoon
-MultiDig_2.Text = "Multi Dig"
-MultiDig_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-MultiDig_2.TextScaled = true
-MultiDig_2.TextSize = 24.000
-MultiDig_2.TextWrapped = true
-MultiDig_2.TextXAlignment = Enum.TextXAlignment.Left
-
--- Scripts:
-
-local function EQRUAO_fake_script() -- AutoDig.LocalScript
-	local script = Instance.new("LocalScript", AutoDig)
-
-	local button = script.Parent
-	local isActivated = false
-
-	button.MouseButton1Click:Connect(
-		function()
-			if isActivated == false then
-				isActivated = true
+window:Toggle("Auto Dig", false, function(bool)
+            print(bool) -- bool is true or false depending on the state of the toggle
+autodi
+			if AutoDigV == false then
+				AutoDigV = true
 				button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
-				print("Auto Dig Enabled.")
 
-				while AutoDigEnabled == true do
-					wait(0.2)
+				print("Auto Dig Enabled.")
+                
+				while task.wait(0.2) do
 					player.Character:FindFirstChildOfClass("Tool").ToolRemote:FireServer(unpack(args))
 				end
 			else
 				print("Auto Dig Disabled")
-				isActivated = false
+				AutoDigV = false
 				button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
 			end
-		end
-	)
-end
-coroutine.wrap(EQRUAO_fake_script)()
-local function XBAPJPZ_fake_script() -- AutoConvert.LocalScript
-	local script = Instance.new("LocalScript", AutoConvert)
+	end)
 
-	local button = script.Parent
-	local isActivated = false
+    
 
-	button.MouseButton1Click:Connect(
-		function()
-			if isActivated == false and convertEnabled == false then
-				isActivated = true
+
+window:Toggle("Auto Convert", false, function(bool)
+
+    if convertEnabled = false then
 				convertEnabled = true
 				button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
 				convertEnabled = true
@@ -232,54 +57,39 @@ local function XBAPJPZ_fake_script() -- AutoConvert.LocalScript
 			else
 				print("Auto-Convert Disabled")
 				convertEnabled = false
-				isActivated = false
 				button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
 			end
-		end
-	)
-end
-coroutine.wrap(XBAPJPZ_fake_script)()
-local function LFSX_fake_script() -- MultiDig.LocalScript
-	local script = Instance.new("LocalScript", MultiDig)
 
-	local button = script.Parent
-	local isActivated = false
-
-	button.MouseButton1Click:Connect(
-		function()
-			if isActivated == false then
-				isActivated = true
-
-				UserInputService.InputBegan:Connect(
-					function(key)
-						if key.KeyCode == Enum.KeyCode.MouseLeftButton and deb == false then
-							print("Multi Digged.")
-
-							for i = 25, 0, -1 do
-								player.Character:FindFirstChildOfClass("Tool").ToolRemote:FireServer(unpack(args))
-							end
-
-							deb = true
-							wait(0.5)
-							deb = false
-						else
-							warn("Cooldown...")
-						end
-					end
-				)
-
-				button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
-			else
-				isActivated = false
-				button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
-			end
-		end
-	)
-end
-coroutine.wrap(LFSX_fake_script)()
-
--- Main Variables
+end)
 
 
 
+window:Toggle("Multi Dig", false, function(bool)
 
+    if MultiDigV == false then
+        MultiDigV = true
+        UserInputService.InputBegan:Connect(
+            function(key)
+                if key.UserInputType == Enum.UserInputType.MouseButton1 and deb == false then
+                    print("Multi Digged.")
+
+                    for i = 25, 0, -1 do
+                        player.Character:FindFirstChildOfClass("Tool").ToolRemote:FireServer(unpack(args))
+                    end
+
+                    deb = true
+                    wait(0.5)
+                    deb = false
+                else
+                    warn("Cooldown...")
+                end
+            end
+        )
+
+        button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
+    else
+        MultiDigV = false
+        button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
+    end
+
+end)
