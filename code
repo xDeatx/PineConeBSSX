@@ -83,6 +83,7 @@
                 end
             )
         else
+            print("Multi Dig Disabled")
             MultiDigV = false
         end
     end
