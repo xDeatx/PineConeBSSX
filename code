@@ -84,13 +84,6 @@
 end)
 
 
-local dropdown = window:Dropdown("Mob List", {"Mini Mantis", "Mantis", "Ladybug", "Ladybug Boss" "Mini Scorpion", "Scorpion", "Stump Snail", "Ant", "Clover Bug", "Mutated Mob"}, function(name)
-    print(name)
-end)
-
-dropdown:Toggle("Auto Mob")
-
-
 
 
 window:Label("Menu Keybind: P", Color3.fromRGB(255,255,255))
