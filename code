@@ -1,7 +1,7 @@
--- Made by qsizan & wviscool
+-- Gui to Lua
+-- Version: 3.2
 
 -- Instances:
-
 
 local args = {
 	[1] = false
@@ -13,6 +13,9 @@ local UserInputService = game:GetService("UserInputService")
 local convert = game.Workspace:FindFirstChild("Convert")
 local player = game:GetService("Players").LocalPlayer
 local convertEnabled = false
+local AutoDigEnabled = false
+convert.CanCollide = false
+convert.Transparency = 1
 
 local Pinecone = Instance.new("ScreenGui")
 local MainTab = Instance.new("Frame")
@@ -181,134 +184,102 @@ MultiDig_2.TextXAlignment = Enum.TextXAlignment.Left
 
 -- Scripts:
 
-local function EQRUAO_fake_script() -- AutoDig.LocalScript 
-	local script = Instance.new('LocalScript', AutoDig)
+local function EQRUAO_fake_script() -- AutoDig.LocalScript
+	local script = Instance.new("LocalScript", AutoDig)
 
 	local button = script.Parent
 	local isActivated = false
-	
-	button.MouseButton1Click:Connect(function()
-	
-	
-		if isActivated == false then
-			isActivated = true
-			button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
-			
-			
-			while AutoDig == true do
-				wait(0.3)
-				player.Character:FindFirstChildOfClass("Tool").ToolRemote:FireServer(unpack(args))
+
+	button.MouseButton1Click:Connect(
+		function()
+			if isActivated == false then
+				isActivated = true
+				button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
+				print("Auto Dig Enabled.")
+
+				while AutoDigEnabled == true do
+					wait(0.2)
+					player.Character:FindFirstChildOfClass("Tool").ToolRemote:FireServer(unpack(args))
+				end
+			else
+				print("Auto Dig Disabled")
+				isActivated = false
+				button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
 			end
-		else
-			isActivated = false
-			button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
 		end
-	end)
-	
+	)
 end
 coroutine.wrap(EQRUAO_fake_script)()
-local function XBAPJPZ_fake_script() -- AutoConvert.LocalScript 
-	local script = Instance.new('LocalScript', AutoConvert)
+local function XBAPJPZ_fake_script() -- AutoConvert.LocalScript
+	local script = Instance.new("LocalScript", AutoConvert)
 
 	local button = script.Parent
 	local isActivated = false
-	
-	button.MouseButton1Click:Connect(function()
-	
-	
-		if isActivated == false and convertEnabled == false then
-			isActivated = true
-			convertEnabled = true
-			button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
-			convertEnabled = true
-			print("Enabled")
-			while convertEnabled == true do
-				convert.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
-				wait(0.1)
-				convert.Position = Vector3.new(50,1000,50)
-			end 
-		else
-			print("Disabled")
-			convertEnabled = false
-			isActivated = false
-			button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
+
+	button.MouseButton1Click:Connect(
+		function()
+			if isActivated == false and convertEnabled == false then
+				isActivated = true
+				convertEnabled = true
+				button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
+				convertEnabled = true
+				print("Auto-Convert Enabled")
+				while convertEnabled == true do
+					convert.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
+					wait(0.1)
+					convert.Position = Vector3.new(50, 1000, 50)
+				end
+			else
+				print("Auto-Convert Disabled")
+				convertEnabled = false
+				isActivated = false
+				button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
+			end
 		end
-	end)
-	
+	)
 end
 coroutine.wrap(XBAPJPZ_fake_script)()
-local function LFSX_fake_script() -- MultiDig.LocalScript 
-	local script = Instance.new('LocalScript', MultiDig)
+local function LFSX_fake_script() -- MultiDig.LocalScript
+	local script = Instance.new("LocalScript", MultiDig)
 
 	local button = script.Parent
 	local isActivated = false
-	
-	button.MouseButton1Click:Connect(function()
-	
-	
-		if isActivated == false then
-			isActivated = true
-			
-			UserInputService.InputBegan:Connect(function(key)
-				if key.KeyCode == Enum.KeyCode.MouseLeftButton and deb == false then
-					
-					for i = 25, 0, -1 do
-						player.Character:FindFirstChildOfClass("Tool").ToolRemote:FireServer(unpack(args))    
+
+	button.MouseButton1Click:Connect(
+		function()
+			if isActivated == false then
+				isActivated = true
+
+				UserInputService.InputBegan:Connect(
+					function(key)
+						if key.KeyCode == Enum.KeyCode.MouseLeftButton and deb == false then
+							print("Multi Digged.")
+
+							for i = 25, 0, -1 do
+								player.Character:FindFirstChildOfClass("Tool").ToolRemote:FireServer(unpack(args))
+							end
+
+							deb = true
+							wait(0.5)
+							deb = false
+						else
+							warn("Cooldown...")
+						end
 					end
-					
-				deb = true
-				wait(0.5)
-				deb = false
-				end
-			end)
-			
-			button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
-		else
-			isActivated = false
-			button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
+				)
+
+				button.BackgroundColor3 = Color3.fromRGB(254, 146, 15)
+			else
+				isActivated = false
+				button.BackgroundColor3 = Color3.fromRGB(54, 54, 54)
+			end
 		end
-	end)
-	
+	)
 end
 coroutine.wrap(LFSX_fake_script)()
 
-
-
-
-
-
 -- Main Variables
 
-local convertEnabled = false
 
 
-convert.CanCollide = false
-convert.Transparency = 1
 
-
--- User Input Service function.
---[[ UserInputService.InputBegan:Connect(function(Key)
-
-	if Key.KeyCode == Enum.KeyCode.T then
-
-		for i = 25, 0, -1 do
-			player.Character:FindFirstChildOfClass("Tool").ToolRemote:FireServer(unpack(args))    
-		end
-
-	elseif Key.KeyCode == Enum.KeyCode.G then
-
-		if convertEnabled == false then
-			convertEnabled = true
-			print("Enabled")
-			while convertEnabled == true do
-				convert.CFrame = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
-				wait(0.1)
-				convert.Position = Vector3.new(50,1000,50)
-			end 
-		else
-			print("Disabled")
-			convertEnabled = false
-		end
-
-	end
-end)  ]]
